@@ -59,6 +59,7 @@ module.exports = function(env, argv) {
   if (libraryName) {
     config.output.library = libraryName;
   }
+  config.output.libraryTarget = 'umd';
 
   if (!isNode) {
     // TODO: Add port config by backId
