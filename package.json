@@ -99,7 +99,8 @@
     "webpack-node-externals": "^1.7.2",
     "workbox-webpack-plugin": "^4.1.1",
     "worker-loader": "^2.0.0",
-    "yargs": "^13.2.2"
+    "yargs": "^13.2.2",
+    "common": "file:./packages/common"
   },
   "optionalDependencies": {
     "fibers": "^3.1.1"
@@ -131,8 +132,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/waldjs/wald.git"
-  },
-  "dependencies": {
-    "common": "file:./packages/common"
   }
 }
