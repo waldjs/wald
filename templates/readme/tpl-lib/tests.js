@@ -15,6 +15,7 @@ const getSummary = function() {
 
     const coverageDir = paths.project('coverage');
     const coverageSubDirs = fs.readdirSync(coverageDir)
+    console.log(coverageSubDirs);
     const coverage = coverageSubDirs
         .filter((nameSpaceDir) => {
             const fileStat = fs.lstatSync(paths.project(`coverage/${nameSpaceDir}`));

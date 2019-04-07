@@ -118,13 +118,11 @@
       },
       "coverage": {
         "nameSpaces": [
-          "front",
           "wald"
         ]
       },
       "test": {
         "nameSpaces": [
-          "front",
           "wald"
         ]
       }
