@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { EntityCreator, AbstractEntityCreatorDecorator } from ".";
-import { createBlueprint } from "wald/blueprint";
-import { Ioc } from "wald/ioc";
+import { createBlueprint } from "../blueprint";
+import { Ioc } from "../ioc";
 
 describe("abstractEntityCreatorDecorator", function() {
   const entityCreator = new EntityCreator();

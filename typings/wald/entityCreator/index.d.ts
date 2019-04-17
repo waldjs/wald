@@ -1,4 +1,4 @@
-import { Blueprint, BlueprintCreateFunctionOptions, BlueprintEntity } from "./../blueprint";
+import { Blueprint, BlueprintCreateFunctionOptions, BlueprintEntity } from "../blueprint";
 export declare type CreatorOptions = {
     [key: string]: any;
 };

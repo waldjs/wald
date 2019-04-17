@@ -1,8 +1,8 @@
 import { assert } from "chai";
 import { EntityCreator } from ".";
 import { MultitonEntityCreatorDecorator } from "./multitonEntityCreatorDecorator";
-import { createBlueprint } from "wald/blueprint";
-import { Ioc } from "wald/ioc";
+import { createBlueprint } from "../blueprint";
+import { Ioc } from "../ioc";
 
 describe("multitonEntityCreatorDecorator", function() {
   describe("create", function() {

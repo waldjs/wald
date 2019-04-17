@@ -2,7 +2,7 @@ import {
   Blueprint,
   BlueprintCreateFunctionOptions,
   BlueprintEntity
-} from "./../blueprint";
+} from "../blueprint";
 
 export type CreatorOptions = {
   [key: string]: any;

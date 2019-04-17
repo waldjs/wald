@@ -1,0 +1,17 @@
+{
+  "build": {
+    "nameSpaces": [
+      "wald"
+    ]
+  },
+  "coverage": {
+    "nameSpaces": [
+      "wald"
+    ]
+  },
+  "test": {
+    "nameSpaces": [
+      "wald"
+    ]
+  }
+}

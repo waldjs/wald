@@ -1,6 +1,6 @@
 const _ = require("lodash");
 
-const common = require("common");
+const common = require("../lib/node");
 const util = common.webpack;
 const paths = common.paths;
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -42,7 +42,9 @@ module.exports = function({
   outputDir,
   useWorkBox,
   useHot,
-  useCodeSplitting
+  useCodeSplitting,
+  isLibrary,
+  useHtmlCreation
 }) {
   const envIsTesting = util.envIsTesting(env);
   const devMode = process.env.NODE_ENV !== "production";
@@ -104,7 +106,8 @@ module.exports = function({
     const distFiles = shell.ls("-RA", outputDir);
 
     let dynamicGlobPatterns = [];
-    if (!envIsTesting) dynamicGlobPatterns.push("app-shell.html");
+    if (!envIsTesting && useHtmlCreation)
+      dynamicGlobPatterns.push("app-shell.html");
     let workBoxOptions = {
       exclude: [/index\.html/, /\.map$/],
       // these options encourage the ServiceWorkers to get in there fast
@@ -118,7 +121,7 @@ module.exports = function({
           // https://github.com/GoogleChrome/workbox/blob/912080a1bf3255c61151ca3d0ebd0895aaf377e2/packages/workbox-build/src/lib/get-file-details.js#L45
           // https://github.com/GoogleChrome/workbox/issues/1353
           // https://github.com/GoogleChrome/workbox/issues/1809
-          const matches = micromatch.match(distFiles, globPattern);
+          const matches = micromatch(distFiles, globPattern);
           return matches.length > 0;
         }),
         ...dynamicGlobPatterns
@@ -134,6 +137,7 @@ module.exports = function({
                 cachedResponseWillBeUsed: async opt => {
                   if (!opt.cachedResponse) {
                     const response = await caches.match("/app-shell.html");
+                    // TODO: Remove this
                     console.log("fallback", response);
                     return response;
                   }
@@ -155,6 +159,10 @@ module.exports = function({
     config.output.globalObject = "this";
   }
 
+  if (isLibrary) {
+    config.output.libraryTarget = "umd";
+  }
+
   if (useCodeSplitting) {
     config.plugins.hashedModuleIds = new webpack.HashedModuleIdsPlugin();
     config.optimization = config.optimization || {};
@@ -171,7 +179,7 @@ module.exports = function({
       (config.optimization.runtimeChunk = "single");
   }
 
-  if (!envIsTesting) {
+  if (!envIsTesting && useHtmlCreation) {
     let htmlWebpackPluginOptions = {
       template: paths.lib(`${nameSpaceId}/assets/index.html`)
     };
@@ -189,8 +197,8 @@ module.exports = function({
         minifyURLs: true
       };
     }
-    //config.plugins.html = new HtmlWebpackPlugin(htmlWebpackPluginOptions);
-    //config.plugins.htmlHook = new HtmlWebpackHookPlugin({ outputDir });
+    config.plugins.html = new HtmlWebpackPlugin(htmlWebpackPluginOptions);
+    config.plugins.htmlHook = new HtmlWebpackHookPlugin({ outputDir });
   }
 
   if (process.env.BUNDLE_ANALYZER) {
