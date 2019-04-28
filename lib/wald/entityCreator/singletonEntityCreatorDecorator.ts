@@ -8,11 +8,22 @@ import {
   BlueprintCreateFunctionOptions,
   BlueprintEntity
 } from "../blueprint";
+import { EntityStorageInterface, EntityStorage } from "../entityStorage";
 
 export class SingletonEntityCreatorDecorator
   extends AbstractEntityCreatorDecorator
   implements EntityCreatorInterface {
-  _singletons = {};
+  _entityStorage: EntityStorageInterface;
+
+  constructor(options: {
+    entityCreator: EntityCreatorInterface;
+    entityStorage?: EntityStorageInterface;
+  }) {
+    super(options);
+
+    this._entityStorage = options.entityStorage || new EntityStorage();
+  }
+
   create<
     B extends Blueprint,
     CO extends CreatorOptions,
@@ -23,15 +34,26 @@ export class SingletonEntityCreatorDecorator
       blueprint.meta.singleton && options.creator.noSingleton !== true;
 
     if (isSingleton) {
-      let singleton = this._singletons[blueprint.id];
-      if (singleton !== undefined) {
-        return singleton;
+      let entity = this._entityStorage.getEntity({
+        blueprint,
+        entityId: blueprint.id
+      });
+      if (entity !== undefined) {
+        return entity;
       }
+
+      options.create.clearSingleton = () => {
+        this._entityStorage.unsetEntity(blueprint.id);
+      };
     }
 
     const entity = this.entityCreator.create(options);
     if (isSingleton) {
-      this._singletons[blueprint.id] = entity;
+      this._entityStorage.setEntity({
+        blueprint,
+        entityId: blueprint.id,
+        entity
+      });
     }
 
     return entity;

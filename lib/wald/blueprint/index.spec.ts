@@ -1,11 +1,10 @@
 import { assert } from "chai";
-import { Ioc } from "./ioc";
 import {
   createBlueprint,
   mapBlueprintEntity,
   equalBlueprint,
   oneOfBlueprints
-} from "./blueprint";
+} from ".";
 
 describe("blueprint", function() {
   const useObject = createBlueprint({

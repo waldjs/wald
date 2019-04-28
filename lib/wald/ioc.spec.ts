@@ -21,11 +21,35 @@ describe("ioc", function() {
         test: true
       });
     });
+
+    it("should send the creator options to the entityCreator", function() {
+      let creatorOptionsRef;
+      const ioc = new Ioc({
+        entityCreator: {
+          create: ({ creator }) => {
+            creatorOptionsRef = creator;
+
+            return "" as any;
+          }
+        }
+      });
+
+      ioc.get({ blueprint: useObject, options: { myOption: true } });
+      assert.equal(creatorOptionsRef.myOption, true);
+    });
   });
 
   describe("getEntityCreator", function() {
     it("should return the set entityCreator", function() {
       assert.equal(ioc.getEntityCreator(), ioc._entityCreator);
+    });
+  });
+
+  describe("constructor", function() {
+    it("should accept entityCreator", function() {
+      const newEntityCreator = new EntityCreator();
+      const ioc = new Ioc({ entityCreator: newEntityCreator });
+      assert.equal(ioc.getEntityCreator(), newEntityCreator);
     });
   });
 

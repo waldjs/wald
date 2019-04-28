@@ -3,6 +3,7 @@ import { EntityCreator } from ".";
 import { MultitonEntityCreatorDecorator } from "./multitonEntityCreatorDecorator";
 import { createBlueprint } from "../blueprint";
 import { Ioc } from "../ioc";
+import { EntityStorage } from "../entityStorage";
 
 describe("multitonEntityCreatorDecorator", function() {
   describe("create", function() {
@@ -59,6 +60,41 @@ describe("multitonEntityCreatorDecorator", function() {
       }
 
       assert.equal(throwed, true);
+    });
+
+    describe("clearMultiton", function() {
+      it("should remove the entity reference from the entityStorage", function() {
+        let deleteRef;
+        const useRandomById = createBlueprint({
+          create: ({ clearMultiton }) => {
+            deleteRef = () => clearMultiton();
+
+            return Math.random();
+          },
+          meta: { multiton: true }
+        });
+
+        const entityStorage = new EntityStorage();
+        const entityCreator = new EntityCreator();
+        const multitonEntityCreatorDecorator = new MultitonEntityCreatorDecorator(
+          {
+            entityCreator,
+            entityStorage
+          }
+        );
+        multitonEntityCreatorDecorator.create({
+          blueprint: useRandomById,
+          creator: { multitonId: "anId" },
+          create: { ioc: new Ioc({}) }
+        });
+        assert.equal(
+          Object.keys(entityStorage._entities).length,
+          1,
+          "There should be one stored entity after create"
+        );
+        deleteRef();
+        assert.equal(Object.keys(entityStorage._entities).length, 0);
+      });
     });
   });
 });

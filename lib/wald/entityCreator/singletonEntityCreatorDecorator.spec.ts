@@ -3,6 +3,7 @@ import { createBlueprint } from "../blueprint";
 import { EntityCreator } from ".";
 import { SingletonEntityCreatorDecorator } from "./singletonEntityCreatorDecorator";
 import { Ioc } from "../ioc";
+import { EntityStorage } from "../entityStorage";
 
 describe("singletonEntityCreatorDecorator", function() {
   describe("create", function() {
@@ -46,6 +47,41 @@ describe("singletonEntityCreatorDecorator", function() {
       });
 
       assert.notEqual(result, result2);
+    });
+
+    describe("clearSingleton", function() {
+      it("should remove the entity reference from the entityStorage", function() {
+        let deleteRef;
+        const useRandomById = createBlueprint({
+          create: ({ clearSingleton }) => {
+            deleteRef = () => clearSingleton();
+
+            return Math.random();
+          },
+          meta: { singleton: true }
+        });
+
+        const entityStorage = new EntityStorage();
+        const entityCreator = new EntityCreator();
+        const singletonEntityCreatorDecorator = new SingletonEntityCreatorDecorator(
+          {
+            entityStorage,
+            entityCreator
+          }
+        );
+        singletonEntityCreatorDecorator.create({
+          blueprint: useRandomById,
+          creator: {},
+          create: { ioc: new Ioc({}) }
+        });
+        assert.equal(
+          Object.keys(entityStorage._entities).length,
+          1,
+          "There should be one stored entity after create"
+        );
+        deleteRef();
+        assert.equal(Object.keys(entityStorage._entities).length, 0);
+      });
     });
   });
 });
