@@ -5,11 +5,10 @@ export {
   setGlobalBlueprintIdGenerator,
   BlueprintIdGenerator,
   AbstractBlueprintIdGeneratorDecorator
-} from "../blueprint/idGenerator"
-export * from "../blueprint/idGenerator/moduleBlueprintIdGeneratorDecorator"
+} from "../blueprint/idGenerator";
+export * from "../blueprint/idGenerator/moduleBlueprintIdGeneratorDecorator";
 export * from "../entityCreator";
 export * from "../entityCreator/multitonEntityCreatorDecorator";
 export * from "../entityCreator/singletonEntityCreatorDecorator";
-export * from "../entityStorage"
+export * from "../entityStorage";
 export * from "../utils";
-
