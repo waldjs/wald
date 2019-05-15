@@ -12,7 +12,7 @@ describe("ioc", function() {
     }
   });
 
-  const ioc = new Ioc({});
+  const ioc = new Ioc();
 
   describe("get", function() {
     it("should return the resolved entity of the blueprint", function() {

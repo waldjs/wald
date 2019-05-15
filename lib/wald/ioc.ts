@@ -20,7 +20,7 @@ export class Ioc implements IocInterface {
     entityCreator = new EntityCreator()
   }: {
     entityCreator?: EntityCreatorInterface;
-  }) {
+  } = {}) {
     this._entityCreator = entityCreator;
   }
 
