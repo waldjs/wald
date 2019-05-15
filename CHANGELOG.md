@@ -1,3 +1,6 @@
+## 0.1.2
+* Options object is now optional to instantiate the Ioc class 
+
 ## 0.1.1
 * Add several missing library exports
 

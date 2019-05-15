@@ -11,7 +11,7 @@ export interface IocInterface {
 }
 export declare class Ioc implements IocInterface {
     _entityCreator: EntityCreatorInterface;
-    constructor({ entityCreator }: {
+    constructor({ entityCreator }?: {
         entityCreator?: EntityCreatorInterface;
     });
     getEntityCreator(): EntityCreatorInterface;

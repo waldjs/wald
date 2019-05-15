@@ -1,6 +1,6 @@
 {
   "name": "wald",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Minimalistic IOC library for javascript",
   "main": "dist/wald/main.js",
   "homepage": "https://github.com/waldjs/wald",
