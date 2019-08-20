@@ -10,5 +10,6 @@ export * from "../blueprint/idGenerator/moduleBlueprintIdGeneratorDecorator";
 export * from "../entityCreator";
 export * from "../entityCreator/multitonEntityCreatorDecorator";
 export * from "../entityCreator/singletonEntityCreatorDecorator";
+export * from "../entityCreator/globalsEntityCreatorDecorator";
 export * from "../entityStorage";
 export * from "../utils";
