@@ -3,22 +3,27 @@ const webpackUtil = common.webpack;
 const paths = common.paths;
 const _ = require("lodash");
 const FilterWarningsPlugin = require("webpack-filter-warnings-plugin");
-const pkg = require(paths.project('package.json'));
+const pkg = require(paths.project("package.json"));
 
 module.exports = function(env, argv) {
-  const isNode = <%= input.isNode ? 'true': 'false' %>;
-  const isLibrary = <%= input.isLibrary ? 'true': 'false' %>;
-  const nameSpaceId = "<%= input.id %>";
-  const useWorkBox = !isNode && !isLibrary;
-  const useHtmlCreation = !isNode && !isLibrary;
-  let useHot = true;
-  let useCodeSplitting = !isLibrary;
+  const nameSpace = require("./config")();
 
-  const envIsTesting = webpackUtil.envIsTesting(env);
+  const envIsWatching = webpackUtil.envIsWatching();
+  const envIsTesting = webpackUtil.envIsTesting();
   const envIsProd = process.env.NODE_ENV === "production";
 
-  useHot = useHot && !envIsProd && !isNode && !envIsTesting;
-  useCodeSplitting = useCodeSplitting && !envIsTesting && !isNode && !useHot;
+  const nameSpaceId = nameSpace.id;
+  const isLibrary = nameSpace.isLibrary;
+  const useWorkBox = nameSpace.useWorkBox && !nameSpace.isNode;
+  const useHot =
+    nameSpace.useHot &&
+    envIsWatching &&
+    !envIsProd &&
+    !nameSpace.isNode &&
+    !envIsTesting;
+  const useCodeSplitting =
+    nameSpace.useCodeSplitting && !envIsTesting && !nameSpace.isNode && !useHot;
+  const useHtmlCreation = nameSpace.useHtmlCreation && !nameSpace.isNode;
 
   let nameSpaceConfig = require("../webpack.common-namespace.config")({
     env,
@@ -30,11 +35,12 @@ module.exports = function(env, argv) {
   let commonConfig = require("../webpack.common.config")({
     env,
     argv,
-    isNode,
+    isNode: nameSpace.isNode,
     outputDir,
-    nameSpaceId
+    nameSpaceId,
+    isLibrary
   });
-  const envConfig = isNode
+  const envConfig = nameSpace.isNode
     ? require("../webpack.common-back.config.js")({ env, argv, isLibrary })
     : require("../webpack.common-front.config.js")({
         env,
@@ -62,31 +68,30 @@ module.exports = function(env, argv) {
 
   if (isLibrary) {
     // Add your custom library build settings here
-    config.output.library = pkg.name;
+    config.output.library = [pkg.name, "[name]"];
+    // config.output.library = pkg.name;
   }
 
-  if (!isNode) {
+  if (!nameSpace.isNode) {
     // TODO: Add port config by backId
-    <%_ if (input.isNode || !input.backId) { -%>
     // Example websocket proxy
     /*
-    <%_ } -%>
     config.devServer.proxy = {
       "/faye": {
         target: "ws://localhost:20000/faye",
         ws: true
       }
     };
+
     config.output.publicPath = "/";
+
     config.devServer = {
       ...config.devServer,
       historyApiFallback: true
       // Add this if you use multiple domains for development / proxies
       // headers: { 'Access-Control-Allow-Origin': '*' }
     };
-    <%_ if (input.isNode || !input.backId) { -%>
     */
-    <%_ } -%>
   }
 
   config.plugins.filterWarnings = new FilterWarningsPlugin({
