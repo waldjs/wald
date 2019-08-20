@@ -1,3 +1,9 @@
+## 0.2.0
+* Updated all dev dependencies to current major versions
+* Minor internal type improvements
+* Implemented GlobalsEntityCreatorDecorator
+  * It's a small decorator providing blueprints with ioc wide custom, global variables
+
 ## 0.1.2
 * Options object is now optional to instantiate the Ioc class 
 
