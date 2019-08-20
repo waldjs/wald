@@ -42,7 +42,7 @@ export class SingletonEntityCreatorDecorator
         return entity;
       }
 
-      options.create.clearSingleton = () => {
+      (options.create as any).clearSingleton = () => {
         this._entityStorage.unsetEntity(blueprint.id);
       };
     }

@@ -44,7 +44,7 @@ export class MultitonEntityCreatorDecorator
         return entity;
       }
 
-      options.create.clearMultiton = () => {
+      (options.create as any).clearMultiton = () => {
         this._entityStorage.unsetEntity(entityId);
       };
     }
