@@ -1,3 +1,6 @@
+## 0.2.1
+* Switch UMD output again to single entrypoint format (as it was with 0.1.2)
+
 ## 0.2.0
 * Updated all dev dependencies to current major versions
 * Minor internal type improvements
