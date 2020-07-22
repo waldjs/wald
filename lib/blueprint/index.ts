@@ -23,13 +23,13 @@ export type Blueprint<
 
 export type BlueprintEntity<T extends Blueprint> = ReturnType<T["create"]>;
 
-export const createBlueprint = function<
+export const createBlueprint = function <
   BCF extends BlueprintCreateFunction,
   BM extends BlueprintMeta
 >({
   id = "",
   create,
-  meta = {}
+  meta = {},
 }: {
   create: BCF;
   meta?: BM | {};
@@ -38,7 +38,7 @@ export const createBlueprint = function<
   let blueprint: Blueprint<BCF, BM> = {
     id,
     create,
-    meta: meta as any
+    meta: meta as any,
   };
 
   blueprint.id = createBlueprintId(blueprint);
@@ -46,19 +46,19 @@ export const createBlueprint = function<
   return blueprint;
 };
 
-export const mapBlueprintEntity = function<
+export const mapBlueprintEntity = function <
   B extends Blueprint,
   M extends () => BlueprintEntity<B>
 >(blueprint: B, map: M): BlueprintEntity<B> {
   return map();
 };
-export const equalBlueprint = function(
+export const equalBlueprint = function (
   blueprintIs: Blueprint,
   blueprintShould: Blueprint
 ) {
   return blueprintIs.id === blueprintShould.id;
 };
-export const oneOfBlueprints = function(
+export const oneOfBlueprints = function (
   blueprintIs: Blueprint,
   blueprintsShould: Blueprint[]
 ) {

@@ -3,13 +3,13 @@ import {
   BlueprintIdGenerator,
   setGlobalBlueprintIdGenerator,
   AbstractBlueprintIdGeneratorDecorator,
-  createBlueprintId
+  createBlueprintId,
 } from ".";
 import { assert } from "chai";
 import { createBlueprint } from "..";
 
-describe("get/setGlobalBlueprintIdGenerator", function() {
-  it("should set and return the global generator", function() {
+describe("get/setGlobalBlueprintIdGenerator", function () {
+  it("should set and return the global generator", function () {
     const customIdGenerator = new BlueprintIdGenerator();
     const originalIdGenerator = getGlobalBlueprintIdGenerator();
     setGlobalBlueprintIdGenerator(customIdGenerator);
@@ -19,13 +19,13 @@ describe("get/setGlobalBlueprintIdGenerator", function() {
   });
 });
 
-describe("AbstractBlueprintIdGeneratorDecorator", function() {
-  describe("generate", function() {
-    it("should return a new id", function() {
+describe("AbstractBlueprintIdGeneratorDecorator", function () {
+  describe("generate", function () {
+    it("should return a new id", function () {
       const defaultGenerator = new BlueprintIdGenerator();
       class MyGenerator extends AbstractBlueprintIdGeneratorDecorator {}
       const generator = new MyGenerator({
-        blueprintIdGenerator: defaultGenerator
+        blueprintIdGenerator: defaultGenerator,
       });
 
       const blueprint = createBlueprint({ create: () => null });
@@ -38,10 +38,10 @@ describe("AbstractBlueprintIdGeneratorDecorator", function() {
   });
 });
 
-describe("createBlueprintId", function() {
-  it("should create unique ids", function() {
+describe("createBlueprintId", function () {
+  it("should create unique ids", function () {
     const blueprint = createBlueprint({
-      create: () => null
+      create: () => null,
     });
     blueprint.id = "";
 

@@ -3,26 +3,26 @@ import { EntityCreator, AbstractEntityCreatorDecorator } from ".";
 import { createBlueprint } from "../blueprint";
 import { Ioc } from "../ioc";
 
-describe("abstractEntityCreatorDecorator", function() {
+describe("abstractEntityCreatorDecorator", function () {
   const entityCreator = new EntityCreator();
   class CustomEntityCreatorDecorator extends AbstractEntityCreatorDecorator {}
   const customEntityCreatorDecorator = new CustomEntityCreatorDecorator({
-    entityCreator
+    entityCreator,
   });
   const useObject = createBlueprint({
-    create: function() {
+    create: function () {
       return {
-        test: true
+        test: true,
       };
-    }
+    },
   });
 
-  describe("create", function() {
-    it("should return the new entity of the blueprint", function() {
+  describe("create", function () {
+    it("should return the new entity of the blueprint", function () {
       const result = customEntityCreatorDecorator.create({
         blueprint: useObject,
         create: { ioc: new Ioc({}) },
-        creator: {}
+        creator: {},
       });
 
       assert.deepEqual(result, { test: true });

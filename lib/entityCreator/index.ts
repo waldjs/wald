@@ -1,7 +1,7 @@
 import {
   Blueprint,
   BlueprintCreateFunctionOptions,
-  BlueprintEntity
+  BlueprintEntity,
 } from "../blueprint";
 
 export type CreatorOptions = {
@@ -15,7 +15,7 @@ export interface EntityCreatorInterface {
   >({
     blueprint: B,
     creator: CO,
-    create: BCO
+    create: BCO,
   }) => BlueprintEntity<B>;
 }
 export class EntityCreator implements EntityCreatorInterface {
@@ -26,7 +26,7 @@ export class EntityCreator implements EntityCreatorInterface {
   >({
     blueprint,
     creator,
-    create
+    create,
   }: {
     blueprint: B;
     creator: CO;

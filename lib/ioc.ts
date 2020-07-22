@@ -1,7 +1,7 @@
 import {
   EntityCreatorInterface,
   CreatorOptions,
-  EntityCreator
+  EntityCreator,
 } from "./entityCreator";
 import { Blueprint, BlueprintEntity } from "./blueprint";
 
@@ -17,7 +17,7 @@ export interface IocInterface {
 export class Ioc implements IocInterface {
   _entityCreator: EntityCreatorInterface;
   constructor({
-    entityCreator = new EntityCreator()
+    entityCreator = new EntityCreator(),
   }: {
     entityCreator?: EntityCreatorInterface;
   } = {}) {
@@ -34,7 +34,7 @@ export class Ioc implements IocInterface {
 
   get<B extends Blueprint, O extends CreatorOptions>({
     blueprint,
-    options = {}
+    options = {},
   }: {
     blueprint: B;
     options?: O | {};
@@ -42,7 +42,7 @@ export class Ioc implements IocInterface {
     return this._entityCreator.create({
       blueprint,
       creator: options,
-      create: { ioc: this }
+      create: { ioc: this },
     });
   }
 }

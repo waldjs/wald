@@ -4,7 +4,7 @@ export {
   getGlobalBlueprintIdGenerator,
   setGlobalBlueprintIdGenerator,
   BlueprintIdGenerator,
-  AbstractBlueprintIdGeneratorDecorator
+  AbstractBlueprintIdGeneratorDecorator,
 } from "./blueprint/idGenerator";
 export * from "./blueprint/idGenerator/moduleBlueprintIdGeneratorDecorator";
 export * from "./entityCreator";

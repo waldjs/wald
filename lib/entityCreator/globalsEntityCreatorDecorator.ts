@@ -16,10 +16,10 @@ export class GlobalsEntityCreatorDecorator extends AbstractEntityCreatorDecorato
   }
 }
 
-export const createGlobalBlueprintCreateFn = function<R = any>(
+export const createGlobalBlueprintCreateFn = function <R = any>(
   globalKey: string
 ): (options: BlueprintCreateFunctionOptions) => R {
-  return function(options) {
+  return function (options) {
     return options.globals[globalKey] as any;
   };
 };

@@ -3,34 +3,34 @@ import {
   createBlueprint,
   mapBlueprintEntity,
   equalBlueprint,
-  oneOfBlueprints
+  oneOfBlueprints,
 } from ".";
 
-describe("blueprint", function() {
+describe("blueprint", function () {
   const useObject = createBlueprint({
-    create: function() {
+    create: function () {
       return {
-        test: true
+        test: true,
       };
-    }
+    },
   });
   const useBool = createBlueprint({
-    create: function() {
+    create: function () {
       return true;
-    }
+    },
   });
   const useNumber = createBlueprint({
-    create: function() {
+    create: function () {
       return 1;
-    }
+    },
   });
 
-  describe("mapBlueprintEntity", function() {
-    it("should return the result of the function", function() {
+  describe("mapBlueprintEntity", function () {
+    it("should return the result of the function", function () {
       const expectedResult = {
-        test: false
+        test: false,
       };
-      const result = mapBlueprintEntity(useObject, function() {
+      const result = mapBlueprintEntity(useObject, function () {
         return expectedResult;
       });
 
@@ -38,22 +38,22 @@ describe("blueprint", function() {
     });
   });
 
-  describe("equalBlueprint", function() {
-    it("should return true if the blueprints are equal", function() {
+  describe("equalBlueprint", function () {
+    it("should return true if the blueprints are equal", function () {
       const result = equalBlueprint(useObject, useObject);
 
       assert.equal(result, true);
     });
   });
 
-  describe("oneOfBlueprints", function() {
-    it("should return true if one of the blueprints are equal", function() {
+  describe("oneOfBlueprints", function () {
+    it("should return true if one of the blueprints are equal", function () {
       const result = oneOfBlueprints(useObject, [useObject, useBool]);
 
       assert.equal(result, true);
     });
 
-    it("should return false if none of the blueprints are equal", function() {
+    it("should return false if none of the blueprints are equal", function () {
       const result = oneOfBlueprints(useObject, [useBool, useNumber]);
 
       assert.equal(result, false);

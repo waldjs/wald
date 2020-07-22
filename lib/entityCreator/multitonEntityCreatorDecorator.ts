@@ -3,7 +3,7 @@ import { EntityCreatorInterface } from ".";
 import {
   BlueprintEntity,
   Blueprint,
-  BlueprintCreateFunctionOptions
+  BlueprintCreateFunctionOptions,
 } from "../blueprint";
 import { CreatorOptions } from ".";
 import { EntityStorageInterface, EntityStorage } from "../entityStorage";

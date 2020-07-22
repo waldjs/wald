@@ -5,7 +5,7 @@ export type EntityId = string | number;
 export interface EntityStorageInterface {
   getEntity<T extends Blueprint>({
     blueprint,
-    entityId
+    entityId,
   }: {
     blueprint: T;
     entityId: EntityId;
@@ -13,7 +13,7 @@ export interface EntityStorageInterface {
   setEntity<T extends Blueprint>({
     blueprint,
     entityId,
-    entity
+    entity,
   }: {
     blueprint: T;
     entityId: EntityId;
@@ -25,7 +25,7 @@ export interface EntityStorageInterface {
 export class EntityStorage implements EntityStorageInterface {
   _entities = {};
   getEntity<T extends Blueprint>({
-    entityId
+    entityId,
   }: {
     entityId: EntityId;
   }): BlueprintEntity<T> {
@@ -33,7 +33,7 @@ export class EntityStorage implements EntityStorageInterface {
   }
   setEntity<T extends Blueprint>({
     entity,
-    entityId
+    entityId,
   }: {
     entity: BlueprintEntity<T>;
     entityId: EntityId;

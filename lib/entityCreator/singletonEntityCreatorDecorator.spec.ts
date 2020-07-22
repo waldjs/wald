@@ -5,52 +5,52 @@ import { SingletonEntityCreatorDecorator } from "./singletonEntityCreatorDecorat
 import { Ioc } from "../ioc";
 import { EntityStorage } from "../entityStorage";
 
-describe("singletonEntityCreatorDecorator", function() {
-  describe("create", function() {
+describe("singletonEntityCreatorDecorator", function () {
+  describe("create", function () {
     const useRandomById = createBlueprint({
       create: () => Math.random(),
-      meta: { singleton: true }
+      meta: { singleton: true },
     });
 
     const entityCreator = new EntityCreator();
     const singletonEntityCreatorDecorator = new SingletonEntityCreatorDecorator(
       {
-        entityCreator
+        entityCreator,
       }
     );
 
-    it("should return the same entity", function() {
+    it("should return the same entity", function () {
       const result = singletonEntityCreatorDecorator.create({
         blueprint: useRandomById,
         creator: {},
-        create: { ioc: new Ioc({}) }
+        create: { ioc: new Ioc({}) },
       });
       const result2 = singletonEntityCreatorDecorator.create({
         blueprint: useRandomById,
         creator: {},
-        create: { ioc: new Ioc({}) }
+        create: { ioc: new Ioc({}) },
       });
 
       assert.equal(result, result2);
     });
 
-    it("should return different entities if noSingleton is enabled", function() {
+    it("should return different entities if noSingleton is enabled", function () {
       const result = singletonEntityCreatorDecorator.create({
         blueprint: useRandomById,
         creator: { noSingleton: true },
-        create: { ioc: new Ioc({}) }
+        create: { ioc: new Ioc({}) },
       });
       const result2 = singletonEntityCreatorDecorator.create({
         blueprint: useRandomById,
         creator: {},
-        create: { ioc: new Ioc({}) }
+        create: { ioc: new Ioc({}) },
       });
 
       assert.notEqual(result, result2);
     });
 
-    describe("clearSingleton", function() {
-      it("should remove the entity reference from the entityStorage", function() {
+    describe("clearSingleton", function () {
+      it("should remove the entity reference from the entityStorage", function () {
         let deleteRef;
         const useRandomById = createBlueprint({
           create: ({ clearSingleton }) => {
@@ -58,7 +58,7 @@ describe("singletonEntityCreatorDecorator", function() {
 
             return Math.random();
           },
-          meta: { singleton: true }
+          meta: { singleton: true },
         });
 
         const entityStorage = new EntityStorage();
@@ -66,13 +66,13 @@ describe("singletonEntityCreatorDecorator", function() {
         const singletonEntityCreatorDecorator = new SingletonEntityCreatorDecorator(
           {
             entityStorage,
-            entityCreator
+            entityCreator,
           }
         );
         singletonEntityCreatorDecorator.create({
           blueprint: useRandomById,
           creator: {},
-          create: { ioc: new Ioc({}) }
+          create: { ioc: new Ioc({}) },
         });
         assert.equal(
           Object.keys(entityStorage._entities).length,

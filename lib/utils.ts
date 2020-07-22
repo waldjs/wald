@@ -1,7 +1,7 @@
 export type PromiseAllFromObject<O extends Object> = Promise<
   { [K in keyof O]: O[K] extends Promise<infer Result> ? Result : O[K] }
 >;
-export const promiseAllObject = function<
+export const promiseAllObject = function <
   P extends PromiseConstructor,
   PO extends Object
 >(PromiseConstructor: P, objectWithPromises: PO): PromiseAllFromObject<PO> {
@@ -13,7 +13,7 @@ export const promiseAllObject = function<
     keys.push(key);
   }
 
-  return PromiseConstructor.all(promises).then(values => {
+  return PromiseConstructor.all(promises).then((values) => {
     let result: any = {};
 
     const valuesLength = values.length;

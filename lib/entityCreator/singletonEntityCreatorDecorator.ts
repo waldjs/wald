@@ -1,12 +1,12 @@
 import {
   AbstractEntityCreatorDecorator,
   EntityCreatorInterface,
-  CreatorOptions
+  CreatorOptions,
 } from ".";
 import {
   Blueprint,
   BlueprintCreateFunctionOptions,
-  BlueprintEntity
+  BlueprintEntity,
 } from "../blueprint";
 import { EntityStorageInterface, EntityStorage } from "../entityStorage";
 
@@ -36,7 +36,7 @@ export class SingletonEntityCreatorDecorator
     if (isSingleton) {
       let entity = this._entityStorage.getEntity({
         blueprint,
-        entityId: blueprint.id
+        entityId: blueprint.id,
       });
       if (entity !== undefined) {
         return entity;
@@ -52,7 +52,7 @@ export class SingletonEntityCreatorDecorator
       this._entityStorage.setEntity({
         blueprint,
         entityId: blueprint.id,
-        entity
+        entity,
       });
     }
 

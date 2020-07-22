@@ -8,16 +8,16 @@ export type CreateBlueprintIdMiddleware = (
 ) => BlueprintId;
 
 let globalBlueprintIdGenerator: BlueprintIdGeneratorInterface;
-export const getGlobalBlueprintIdGenerator = function() {
+export const getGlobalBlueprintIdGenerator = function () {
   return globalBlueprintIdGenerator;
 };
-export const setGlobalBlueprintIdGenerator = function(
+export const setGlobalBlueprintIdGenerator = function (
   blueprintIdGenerator: BlueprintIdGeneratorInterface
 ) {
   globalBlueprintIdGenerator = blueprintIdGenerator;
 };
 
-export const createBlueprintId = function(blueprint: Blueprint) {
+export const createBlueprintId = function (blueprint: Blueprint) {
   return globalBlueprintIdGenerator.generate(blueprint);
 };
 
